@@ -1,0 +1,8 @@
+<?jelly escape-by-default='true'?>
+<!--
+  This view is used to render the installed plugins page.
+-->
+<div>
+  AWS CodeCommit Helper augments the Git Plugin in order to generate Credentials,
+  without the need for the <code>aws codecommit credential-helper</code> command
+</div>
