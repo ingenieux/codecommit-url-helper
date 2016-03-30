@@ -53,6 +53,8 @@ import hudson.plugins.git.extensions.GitSCMExtension;
 import hudson.plugins.git.extensions.GitSCMExtensionDescriptor;
 import hudson.security.ACL;
 
+import static org.apache.commons.lang.StringUtils.isNotBlank;
+
 /**
  * CodeCommit URL Helper
  */
@@ -115,7 +117,7 @@ public class CodeCommitURLHelper extends GitSCMExtension {
     private Iterable<RepositoryUsernameReference> fetchCodeCommitRepositoryNames(GitSCM scm) throws CredentialNotFoundException {
         AWSCredentialsProvider credentials = new DefaultAWSCredentialsProviderChain();
 
-        if (null != credentialId) {
+        if (isNotBlank(credentialId)) {
             credentials = CredentialsFactory.getCredentials(credentialId);
 
             if (null == credentials)
