@@ -20,6 +20,7 @@ import com.amazonaws.auth.AWSCredentials;
 
 import org.apache.commons.codec.binary.Hex;
 
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.SimpleTimeZone;
@@ -42,6 +43,8 @@ public class RequestSignerBase {
     protected static final String TERMINATOR = "aws4_request";
 
     protected static final String SCHEME = "AWS4";
+
+    protected static final Charset DEFAULT_CHARSET = Charset.forName("ASCII");
 
     static {
         SimpleTimeZone timezone = new SimpleTimeZone(0, "UTC");
@@ -73,7 +76,7 @@ public class RequestSignerBase {
 
     protected byte[] deriveKey() {
         String secret = SCHEME.concat(awsCredentials.getAWSSecretKey());
-        byte[] kSecret = secret.getBytes();
+        byte[] kSecret = secret.getBytes(DEFAULT_CHARSET);
         byte[] kDate = hash(kSecret, strDate);
         byte[] kRegion = hash(kDate, region);
         byte[] kService = hash(kRegion, service);
@@ -89,13 +92,13 @@ public class RequestSignerBase {
 
             mac.init(keySpec);
 
-            return mac.doFinal(obj.getBytes("UTF-8"));
+            return mac.doFinal(obj.getBytes(DEFAULT_CHARSET));
         } catch (Exception exc) {
             throw new RuntimeException(exc);
         }
     }
 
     protected String hexEncode(String obj) {
-        return Hex.encodeHexString(obj.getBytes());
+        return Hex.encodeHexString(obj.getBytes(DEFAULT_CHARSET));
     }
 }

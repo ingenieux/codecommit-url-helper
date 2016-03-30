@@ -21,11 +21,12 @@ import com.amazonaws.auth.AWSCredentialsProvider;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.nio.charset.Charset;
 import java.util.Date;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-@SuppressFBWarnings({"STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE"})
+@SuppressFBWarnings({"STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE", "VA_FORMAT_STRING_USES_NEWLINE"})
 public class CodeCommitRequestSigner extends RequestSignerBase {
     final String repoName;
 
@@ -50,7 +51,7 @@ public class CodeCommitRequestSigner extends RequestSignerBase {
                 AWS_ALGORITHM, strDateTime, scope));
 
         stringToSign.append(DigestUtils.sha256Hex(String.format(
-                "GIT\n%s\n\nhost:%s\n\nhost\n", path, host).getBytes()));
+                "GIT\n%s\n\nhost:%s\n\nhost\n", path, host).getBytes(DEFAULT_CHARSET)));
 
         byte[] key = deriveKey();
 
