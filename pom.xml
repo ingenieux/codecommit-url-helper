@@ -29,7 +29,7 @@
 
     <name>AWS CodeCommit URL Helper</name>
     <description>Generates Token Macros for CodeCommit URLs</description>
-    <url>https://wiki.jenkins-ci.org/display/JENKINS/CodeCommit+URL+Helper+Plugin</url>
+    <url>https://wiki.jenkins-ci.org/display/JENKINS/CodeCommit+URL+Helper</url>
 
     <!-- The default licence for Jenkins OSS Plugins is MIT. Substitute for the applicable one if needed. -->
 
@@ -67,10 +67,10 @@
     </build>
 
     <scm>
-        <connection>scm:git:ssh://github.com/ingenieux/awseb-deployment-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/ingenieux/awseb-deployment-plugin.git
+        <connection>scm:git:ssh://github.com/ingenieux/codecommit-url-helper.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/ingenieux/codecommit-url-helper.git
         </developerConnection>
-        <url>https://wiki.jenkins-ci.org/display/JENKINS/AWSEB+Deployment+Plugin</url>
+        <url>https://github.com/ingenieux/codecommit-url-helper</url>
         <tag>codecommit-url-helper-0.0.1</tag>
     </scm>
 
