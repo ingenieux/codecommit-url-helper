@@ -112,7 +112,7 @@ public class CodeCommitURLHelper extends GitSCMExtension {
         }
     }
 
-    private static final Pattern PATTERN_CODECOMMIT_REPO = Pattern.compile("^https\\:\\/\\/git-codecommit\\.([^\\.]+)\\.amazonaws\\.com\\/v1\\/repos\\/(.*)$");
+    private static final Pattern PATTERN_CODECOMMIT_REPO = Pattern.compile("^https://git-codecommit.([^\\.]+).amazonaws.com/v1/repos/(.*)$");
 
     private Iterable<RepositoryUsernameReference> fetchCodeCommitRepositoryNames(GitSCM scm) throws CredentialNotFoundException {
         AWSCredentialsProvider credentials = new DefaultAWSCredentialsProviderChain();
