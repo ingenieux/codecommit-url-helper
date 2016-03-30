@@ -23,6 +23,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.Date;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+@SuppressFBWarnings({"STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE"})
 public class CodeCommitRequestSigner extends RequestSignerBase {
     final String repoName;
 

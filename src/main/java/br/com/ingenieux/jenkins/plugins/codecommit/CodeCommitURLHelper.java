@@ -27,6 +27,8 @@ import com.cloudbees.plugins.credentials.common.UsernamePasswordCredentials;
 import com.cloudbees.plugins.credentials.domains.DomainRequirement;
 import com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.jenkinsci.plugins.gitclient.GitClient;
@@ -45,6 +47,7 @@ import java.util.regex.Pattern;
 import javax.security.auth.login.CredentialNotFoundException;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.Extension;
 import hudson.model.Item;
 import hudson.plugins.git.GitException;
@@ -66,7 +69,7 @@ public class CodeCommitURLHelper extends GitSCMExtension {
         this.credentialId = credentialId;
     }
 
-    private static final class RepositoryUsernameReference implements Comparable<RepositoryUsernameReference> {
+    private static final class RepositoryUsernameReference {
         private final UsernamePasswordCredentialsImpl credential;
 
         private final String repositoryUrl;
@@ -74,8 +77,23 @@ public class CodeCommitURLHelper extends GitSCMExtension {
         private final String repositoryName;
 
         @Override
-        public int compareTo(RepositoryUsernameReference o) {
-            return this.repositoryName.compareTo(o.repositoryName);
+        public boolean equals(Object o) {
+            if (this == o) return true;
+
+            if (o == null || getClass() != o.getClass()) return false;
+
+            RepositoryUsernameReference that = (RepositoryUsernameReference) o;
+
+            return new EqualsBuilder()
+                    .append(repositoryName, that.repositoryName)
+                    .isEquals();
+        }
+
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder(17, 37)
+                    .append(repositoryName)
+                    .toHashCode();
         }
 
         public RepositoryUsernameReference(String repositoryUrl, String repositoryName, String username, String password) {

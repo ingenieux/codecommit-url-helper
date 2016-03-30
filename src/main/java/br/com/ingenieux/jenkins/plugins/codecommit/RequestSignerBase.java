@@ -27,9 +27,9 @@ import java.util.SimpleTimeZone;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- * Created by aldrin on 04/01/16.
- */
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+@SuppressFBWarnings({"STCAL_STATIC_SIMPLE_DATE_FORMAT_INSTANCE", "STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE"})
 public class RequestSignerBase {
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat(
             "yyyyMMdd'T'HHmmss");
