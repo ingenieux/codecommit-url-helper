@@ -17,6 +17,7 @@ package br.com.ingenieux.jenkins.plugins.codecommit;
  */
 
 import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSSessionCredentials;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -37,6 +38,14 @@ public class CodeCommitRequestSigner extends RequestSignerBase {
 
     public String getPushUrl() {
         String user = awsCredentials.getAWSAccessKeyId();
+
+        if (awsCredentials instanceof AWSSessionCredentials) {
+            String sessionToken = ((AWSSessionCredentials) awsCredentials).getSessionToken();
+
+            if (null != sessionToken && !"".equals(sessionToken)) {
+                user += ("%" + sessionToken);
+            }
+        }
 
         String host = "git-codecommit." + region + ".amazonaws.com";
 
