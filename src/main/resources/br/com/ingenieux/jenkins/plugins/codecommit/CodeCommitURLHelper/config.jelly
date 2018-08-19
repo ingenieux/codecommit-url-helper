@@ -22,8 +22,10 @@
   -->
 
   <f:section title="AWS Credentials">
-    <f:entry title="${%Credentials}" field="credentialId">
-      <c:select />
-    </f:entry>
+    <f:block>
+      <f:entry title="Credentials" field="credentialId">
+        <c:select />
+      </f:entry>
+    </f:block>
   </f:section>
 </j:jelly>
