@@ -69,6 +69,10 @@ public class CodeCommitURLHelper extends GitSCMExtension {
         this.credentialId = credentialId;
     }
 
+    public String getCredentialId() {
+        return this.credentialId;
+    }
+
     private static final class RepositoryUsernameReference {
         private final UsernamePasswordCredentialsImpl credential;
 
@@ -228,4 +232,3 @@ public class CodeCommitURLHelper extends GitSCMExtension {
         }
     }
 }
-
