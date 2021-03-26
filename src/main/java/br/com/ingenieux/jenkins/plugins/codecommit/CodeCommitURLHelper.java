@@ -210,15 +210,20 @@ public class CodeCommitURLHelper extends GitSCMExtension {
 
         public AbstractIdCredentialsListBoxModel<?, ?> doFillCredentialIdItems(
                 @AncestorInPath Item owner) {
-            if (owner == null || !owner.hasPermission(Item.CONFIGURE)) {
+
+            if (owner != null && !owner.hasPermission(Item.CONFIGURE)) {
                 return new AWSCredentialsListBoxModel();
             }
 
-            List<AmazonWebServicesCredentials>
-                    creds =
-                    CredentialsProvider
+            List<AmazonWebServicesCredentials> creds;
+            if (owner == null) {
+                // no owner (e.g. no Job), this happens on the "Configure System" page when adding a Global Library
+                creds = CredentialsProvider.lookupCredentials(AmazonWebServicesCredentials.class);
+            } else {
+                creds = CredentialsProvider
                             .lookupCredentials(AmazonWebServicesCredentials.class, owner, ACL.SYSTEM,
                                     Collections.<DomainRequirement>emptyList());
+            }
 
             return new AWSCredentialsListBoxModel()
                     .withEmptySelection()
