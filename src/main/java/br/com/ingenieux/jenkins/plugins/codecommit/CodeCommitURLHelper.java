@@ -63,15 +63,22 @@ import static org.apache.commons.lang.StringUtils.isNotBlank;
  */
 public class CodeCommitURLHelper extends GitSCMExtension {
     private String credentialId;
+    private String repositoryName;
 
     @DataBoundConstructor
     public CodeCommitURLHelper(String credentialId, String repositoryName) {
         this.credentialId = credentialId;
+        this.repositoryName = repositoryName;
     }
 
     public String getCredentialId() {
         return this.credentialId;
     }
+
+    public String getRepositoryName() {
+        return this.repositoryName;
+    }
+
 
     private static final class RepositoryUsernameReference {
         private final UsernamePasswordCredentialsImpl credential;
