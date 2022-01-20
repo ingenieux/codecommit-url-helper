@@ -63,11 +63,22 @@ import static org.apache.commons.lang.StringUtils.isNotBlank;
  */
 public class CodeCommitURLHelper extends GitSCMExtension {
     private String credentialId;
+    private String repositoryName;
 
     @DataBoundConstructor
     public CodeCommitURLHelper(String credentialId, String repositoryName) {
         this.credentialId = credentialId;
+        this.repositoryName = repositoryName;
     }
+
+    public String getCredentialId() {
+        return this.credentialId;
+    }
+
+    public String getRepositoryName() {
+        return this.repositoryName;
+    }
+
 
     private static final class RepositoryUsernameReference {
         private final UsernamePasswordCredentialsImpl credential;
@@ -199,15 +210,20 @@ public class CodeCommitURLHelper extends GitSCMExtension {
 
         public AbstractIdCredentialsListBoxModel<?, ?> doFillCredentialIdItems(
                 @AncestorInPath Item owner) {
-            if (owner == null || !owner.hasPermission(Item.CONFIGURE)) {
+
+            if (owner != null && !owner.hasPermission(Item.CONFIGURE)) {
                 return new AWSCredentialsListBoxModel();
             }
 
-            List<AmazonWebServicesCredentials>
-                    creds =
-                    CredentialsProvider
+            List<AmazonWebServicesCredentials> creds;
+            if (owner == null) {
+                // no owner (e.g. no Job), this happens on the "Configure System" page when adding a Global Library
+                creds = CredentialsProvider.lookupCredentials(AmazonWebServicesCredentials.class);
+            } else {
+                creds = CredentialsProvider
                             .lookupCredentials(AmazonWebServicesCredentials.class, owner, ACL.SYSTEM,
                                     Collections.<DomainRequirement>emptyList());
+            }
 
             return new AWSCredentialsListBoxModel()
                     .withEmptySelection()
@@ -228,4 +244,3 @@ public class CodeCommitURLHelper extends GitSCMExtension {
         }
     }
 }
-
